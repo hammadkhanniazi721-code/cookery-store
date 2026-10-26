@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshCart - Online Grocery Store</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div class="top-left">
+            <span><i class="fas fa-truck"></i> Free delivery on orders above Rs. 1500</span>
+        </div>
+        <div class="top-right">
+            <a><i class="fas fa-map-marker-alt"></i> Store Locator</a>
+            <a><i class="fas fa-phone"></i> +92 300 1234567</a>
+            <a onclick="showPage('login')">Login</a>
+            <span>|</span>
+            <a onclick="showPage('register')">Register</a>
+        </div>
+    </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+    <div class="header-inner">
+        <div class="logo" onclick="showPage('home')">
+            <div class="logo-icon"><i class="fas fa-shopping-basket"></i></div>
+            <div class="logo-text">
+                <h1>Fresh<span>Cart</span></h1>
+                <p>Grocery Store</p>
+            </div>
+        </div>
+
+        <!-- SEARCH BAR - FIXED -->
+        <div class="header-search">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search for products..." 
+                autocomplete="off"
+                oninput="liveSearch()"
+                onkeydown="if(event.key==='Enter'){event.preventDefault();performSearch();}"
+            >
+            <button type="button" onclick="performSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <div class="header-actions">
+            <div class="action-btn" onclick="showPage('wishlist')">
+                <i class="fas fa-heart"></i>
+                <div class="action-text">
+                    <span>Wishlist</span>
+                    <strong>0 items</strong>
+                </div>
+            </div>
+            <div class="action-btn cart-action" onclick="showPage('cart')">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+                <div class="action-text">
+                    <span>My Cart</span>
+                    <strong id="cartTotalHeader">Rs. 0</strong>
+                </div>
+            </div>
+            <div class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMenu()">
+                <span id="menuIcon">☰</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="mainNav">
+    <div class="navbar-inner">
+        <div class="nav-categories" onclick="toggleCategories(event)">
+            <i class="fas fa-bars"></i>
+            <span>Browse Categories</span>
+            <i class="fas fa-chevron-down"></i>
+            <div class="categories-dropdown" id="categoriesDropdown">
+                <a onclick="goToCategory(event, 'Fruits & Vegetables')"><i class="fas fa-apple-alt"></i> Fruits & Vegetables</a>
+                <a onclick="goToCategory(event, 'Dairy & Eggs')"><i class="fas fa-egg"></i> Dairy & Eggs</a>
+                <a onclick="goToCategory(event, 'Meat & Seafood')"><i class="fas fa-drumstick-bite"></i> Meat & Seafood</a>
+                <a onclick="goToCategory(event, 'Bakery')"><i class="fas fa-bread-slice"></i> Bakery</a>
+                <a onclick="goToCategory(event, 'Beverages')"><i class="fas fa-mug-hot"></i> Beverages</a>
+                <a onclick="goToCategory(event, 'Snacks')"><i class="fas fa-cookie"></i> Snacks</a>
+                <a onclick="goToCategory(event, 'Pantry Staples')"><i class="fas fa-box"></i> Pantry Staples</a>
+                <a onclick="goToCategory(event, 'Frozen Foods')"><i class="fas fa-snowflake"></i> Frozen Foods</a>
+            </div>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a onclick="showPage('home')" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a>
+            <a onclick="showPage('shop')" class="nav-link" data-page="shop"><i class="fas fa-th"></i> Shop</a>
+            <a onclick="showPage('about')" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> About</a>
+            <a onclick="showPage('contact')" class="nav-link" data-page="contact"><i class="fas fa-envelope"></i> Contact</a>
+            <a class="hot-deal"><i class="fas fa-fire"></i> Today's Deals</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================ -->
+<!-- HOME PAGE -->
+<!-- ============================================ -->
+<div id="page-home" class="page active">
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <span class="hero-tag"><i class="fas fa-bolt"></i> Fresh & Fast Delivery</span>
+                <h1>Groceries Delivered To Your <span>Doorstep</span></h1>
+                <p>Shop fresh fruits, vegetables, dairy, and everyday essentials at the best prices. Delivered within 60 minutes.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-primary" onclick="showPage('shop')">
+                        Shop Now <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-outline" onclick="showPage('about')">
+                        Learn More
+                    </button>
+                </div>
+                <div class="hero-features">
+                    <div><i class="fas fa-check-circle"></i> 100% Fresh</div>
+                    <div><i class="fas fa-check-circle"></i> Fast Delivery</div>
+                    <div><i class="fas fa-check-circle"></i> Best Prices</div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=900&auto=format&fit=crop" alt="Grocery">
+                <div class="floating-card card-1">
+                    <i class="fas fa-truck"></i>
+                    <div>
+                        <strong>60 min</strong>
+                        <span>Delivery</span>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-leaf"></i>
+                    <div>
+                        <strong>100%</strong>
+                        <span>Fresh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head">
+            <div>
+                <h2>Shop by Category</h2>
+                <p>Find everything you need in one place</p>
+            </div>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card" onclick="goToCategory(event, 'Fruits & Vegetables')">
+                <div class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=700&auto=format&fit=crop" alt="Fruits">
+                </div>
+                <div class="cat-info">
+                    <h3>Fruits & Veggies</h3>
+                    <p>120+ items</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="goToCategory(event, 'Dairy & Eggs')">
+                <div class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=700&auto=format&fit=crop" alt="Dairy">
+                </div>
+                <div class="cat-info">
+                    <h3>Dairy & Eggs</h3>
+                    <p>85+ items</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="goToCategory(event, 'Meat & Seafood')">
+                <div class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=700&auto=format&fit=crop" alt="Meat">
+                </div>
+                <div class="cat-info">
+                    <h3>Meat & Fish</h3>
+                    <p>60+ items</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="goToCategory(event, 'Bakery')">
+                <div class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=700&auto=format&fit=crop" alt="Bakery">
+                </div>
+                <div class="cat-info">
+                    <h3>Bakery</h3>
+                    <p>45+ items</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="goToCategory(event, 'Beverages')">
+                <div class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=700&auto=format&fit=crop" alt="Beverages">
+                </div>
+                <div class="cat-info">
+                    <h3>Beverages</h3>
+                    <p>95+ items</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="goToCategory(event, 'Snacks')">
+                <div class="cat-img">
+                    <img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=700&auto=format&fit=crop" alt="Snacks">
+                </div>
+                <div class="cat-info">
+                    <h3>Snacks</h3>
+                    <p>150+ items</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-light">
+        <div class="section-head">
+            <div>
+                <h2>Featured Products</h2>
+                <p>Fresh picks from our store</p>
+            </div>
+            <a onclick="showPage('shop')" class="view-all">
+                View All <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="products-grid products-grid-3" id="featuredGrid"></div>
+    </section>
+
+    <section class="promo-section">
+        <div class="promo-grid">
+            <div class="promo-box" style="background:linear-gradient(135deg,#10b981,#059669);">
+                <div class="promo-content">
+                    <span>Fresh Deal</span>
+                    <h3>Fresh Vegetables</h3>
+                    <p>Up to 30% OFF on all veggies</p>
+                    <a onclick="showPage('shop')">Shop Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="promo-img">
+                    <img src="https://images.unsplash.com/photo-1518843875459-f738682238a6?w=700&auto=format&fit=crop" alt="Veggies">
+                </div>
+            </div>
+            <div class="promo-box" style="background:linear-gradient(135deg,#f97316,#ea580c);">
+                <div class="promo-content">
+                    <span>Weekend Special</span>
+                    <h3>Dairy Products</h3>
+                    <p>Buy 1 Get 1 Free</p>
+                    <a onclick="showPage('shop')">Grab Deal <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="promo-img">
+                    <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=700&auto=format&fit=crop" alt="Dairy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head">
+            <div>
+                <h2>Best Sellers</h2>
+                <p>Most loved by our customers</p>
+            </div>
+            <a onclick="showPage('shop')" class="view-all">
+                View All <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="products-grid products-grid-3" id="bestSellers"></div>
+    </section>
+
+    <section class="section bg-light">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
+                <h3>Free Delivery</h3>
+                <p>On orders above Rs. 1500</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                <h3>100% Fresh</h3>
+                <p>Farm-fresh products</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Secure Payment</h3>
+                <p>Multiple payment options</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <h3>24/7 Support</h3>
+                <p>Dedicated customer care</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="newsletter">
+        <div class="newsletter-inner">
+            <div class="newsletter-text">
+                <h3>Get 10% Off Your First Order</h3>
+                <p>Subscribe to our newsletter for exclusive deals, fresh arrivals, and more!</p>
+            </div>
+            <form class="newsletter-form" onsubmit="subscribeNews(event)">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </section> -->
+
+</div>
+
+<!-- ============================================ -->
+<!-- SHOP PAGE -->
+<!-- ============================================ -->
+<div id="page-shop" class="page">
+    <div class="page-container">
+        <div class="breadcrumb">
+            <a onclick="showPage('home')">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Shop</span>
+        </div>
+
+        <div class="page-title">
+            <h1 id="shopTitle">All Products</h1>
+            <p id="shopSubtitle">Browse our fresh grocery collection</p>
+        </div>
+
+        <div class="shop-layout">
+            <aside class="shop-sidebar">
+                <div class="filter-box">
+                    <h3>Categories</h3>
+                    <ul class="filter-list" id="categoryFilter">
+                        <li><a class="active" data-cat="all">All Products</a></li>
+                        <li><a data-cat="Fruits & Vegetables">Fruits & Vegetables</a></li>
+                        <li><a data-cat="Dairy & Eggs">Dairy & Eggs</a></li>
+                        <li><a data-cat="Meat & Seafood">Meat & Seafood</a></li>
+                        <li><a data-cat="Bakery">Bakery</a></li>
+                        <li><a data-cat="Beverages">Beverages</a></li>
+                        <li><a data-cat="Snacks">Snacks</a></li>
+                        <li><a data-cat="Pantry Staples">Pantry Staples</a></li>
+                        <li><a data-cat="Frozen Foods">Frozen Foods</a></li>
+                    </ul>
+                </div>
+
+                <div class="filter-box">
+                    <h3>Price Range</h3>
+                    <input type="range" min="0" max="2500" value="2500" class="price-range" id="priceRange">
+                    <p class="price-label" id="priceLabel">Rs. 0 - Rs. 2500</p>
+                </div>
+
+                <div class="filter-box">
+                    <h3>Availability</h3>
+                    <label class="check-item"><input type="checkbox"> In Stock</label>
+                    <label class="check-item"><input type="checkbox"> On Sale</label>
+                    <label class="check-item"><input type="checkbox"> Organic</label>
+                </div>
+            </aside>
+
+            <div class="shop-content">
+                <div class="shop-toolbar">
+                    <p>Showing <strong id="productCount">40</strong> products</p>
+                    <select id="sortSelect" onchange="sortProducts(this.value)">
+                        <option value="default">Sort: Default</option>
+                        <option value="low-high">Price: Low to High</option>
+                        <option value="high-low">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Popular</option>
+                    </select>
+                </div>
+
+                <div class="products-grid" id="shopGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- PRODUCT DETAIL PAGE -->
+<!-- ============================================ -->
+<div id="page-product" class="page">
+    <div class="page-container">
+        <div class="breadcrumb">
+            <a onclick="showPage('home')">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a onclick="showPage('shop')">Shop</a>
+            <i class="fas fa-chevron-right"></i>
+            <span id="breadcrumbProduct">Product Detail</span>
+        </div>
+
+        <div class="product-detail">
+            <div class="product-detail-images">
+                <img id="mainProductImage" src="" alt="Product">
+            </div>
+            <div class="product-detail-info">
+                <p class="product-category" id="detailCategory">Category</p>
+                <h1 id="detailName">Product Name</h1>
+                <p class="product-detail-price" id="detailPrice">Rs. 0</p>
+                <p class="product-detail-desc">Fresh and premium quality product sourced directly from trusted farms. Delivered with care to your doorstep.</p>
+
+                <div class="product-detail-btns">
+                    <button class="btn btn-primary" onclick="addToCartFromDetail()">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-heart"></i> Wishlist
+                    </button>
+                </div>
+
+                <div class="product-meta">
+                    <p><i class="fas fa-check-circle"></i> In Stock & Ready to Ship</p>
+                    <p><i class="fas fa-truck"></i> Free shipping on orders over Rs. 1500</p>
+                    <p><i class="fas fa-undo"></i> Easy returns within 24 hours</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="related-section">
+            <div class="section-head">
+                <div>
+                    <h2>Related Products</h2>
+                    <p>You might also like these</p>
+                </div>
+            </div>
+            <div class="products-grid products-grid-3" id="relatedGrid"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- CART PAGE -->
+<!-- ============================================ -->
+<div id="page-cart" class="page">
+    <div class="page-container">
+        <div class="breadcrumb">
+            <a onclick="showPage('home')">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Shopping Cart</span>
+        </div>
+
+        <div class="page-title">
+            <h1>Shopping Cart</h1>
+            <p>Review your items before checkout</p>
+        </div>
+
+        <div class="cart-layout">
+            <div class="cart-items">
+                <div class="empty-state" id="cartEmpty">
+                    <i class="fas fa-shopping-basket"></i>
+                    <p>Your cart is empty</p>
+                    <span>Add products to get started</span>
+                    <button class="btn btn-primary" onclick="showPage('shop')" style="margin-top:20px;">
+                        Start Shopping <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div id="cartList"></div>
+            </div>
+
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">Rs. 0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span id="deliveryFee">Rs. 0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="cartTotal">Rs. 0</span>
+                </div>
+                <button class="btn btn-primary btn-full" onclick="checkout()">
+                    Proceed to Checkout <i class="fas fa-arrow-right"></i>
+                </button>
+                <a onclick="showPage('shop')" class="continue-shopping">
+                    <i class="fas fa-arrow-left"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- WISHLIST PAGE -->
+<!-- ============================================ -->
+
+<div id="page-wishlist" class="page">
+    <div class="page-container">
+        <div class="page-title">
+            <h1>My Wishlist</h1>
+            <p>Your saved items for later</p>
+        </div>
+        <div id="wishlistEmpty" class="empty-state">
+            <i class="fas fa-heart"></i>
+            <p>Your wishlist is empty</p>
+            <span>Save your favorite products here</span>
+            <button class="btn btn-primary" onclick="showPage('shop')" style="margin-top:20px;">
+                Browse Products
+            </button>
+        </div>
+        <div id="wishlistList"></div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- MY ORDERS PAGE -->
+<!-- ============================================ -->
+<div id="page-my-orders" class="page">
+    <div class="page-container">
+        <div class="page-title">
+            <h1>My Orders</h1>
+            <p>Track your order history</p>
+        </div>
+        <div id="myOrdersList"></div>
+    </div>
+</div>
+<!-- ============================================ -->
+<!-- ABOUT PAGE -->
+<!-- ============================================ -->
+<div id="page-about" class="page">
+    <div class="page-container">
+        <div class="page-title">
+            <h1>About FreshCart</h1>
+            <p>Your trusted online grocery partner</p>
+        </div>
+
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Fresh Groceries, Delivered Fast</h2>
+                <p>FreshCart is your one-stop online grocery store, delivering farm-fresh fruits, vegetables, dairy, and everyday essentials right to your doorstep.</p>
+                <p>We partner with local farmers and trusted brands to ensure you get the highest quality products at the best prices. With our fast delivery network, your groceries arrive fresh within 60 minutes.</p>
+
+                <div class="about-stats">
+                    <div><h3>50K+</h3><p>Happy Customers</p></div>
+                    <div><h3>5000+</h3><p>Products</p></div>
+                    <div><h3>15+</h3><p>Cities</p></div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=700&auto=format&fit=crop" alt="Our Store">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- CONTACT PAGE -->
+<!-- ============================================ -->
+<div id="page-contact" class="page">
+    <div class="page-container">
+        <div class="page-title">
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you</p>
+        </div>
+
+        <div class="contact-layout">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Visit Us</h4>
+                        <p>123 Main Boulevard, Lahore, Pakistan</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Call Us</h4>
+                        <p>+92 300 1234567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email Us</h4>
+                        <p>support@freshcart.pk</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h4>Working Hours</h4>
+                        <p>Mon - Sun: 8:00 AM - 11:00 PM</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" onsubmit="submitContact(event)">
+                <h3>Send us a message</h3>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject" required>
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn btn-primary">
+                    Send Message <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- LOGIN PAGE -->
+<!-- ============================================ -->
+<div id="page-login" class="page">
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <div class="auth-icon"><i class="fas fa-user"></i></div>
+            <h2>Welcome Back</h2>
+            <p class="auth-subtitle">Login to continue shopping</p>
+            <form onsubmit="handleUserLogin(event)">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="form-options">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a>Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+            </form>
+            <p class="auth-footer">
+                Don't have an account? 
+                <a onclick="showPage('register')">Register Now</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- REGISTER PAGE -->
+<!-- ============================================ -->
+<div id="page-register" class="page">
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <div class="auth-icon"><i class="fas fa-user-plus"></i></div>
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Join FreshCart today</p>
+            <form onsubmit="handleUserRegister(event)">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" placeholder="Phone Number" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+            </form>
+            <p class="auth-footer">
+                Already have an account? 
+                <a onclick="showPage('login')">Login Here</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-col">
+            <div class="footer-logo">
+                <div class="logo-icon"><i class="fas fa-shopping-basket"></i></div>
+                <div>
+                    <h3>Fresh<span>Cart</span></h3>
+                    <p>Grocery Store</p>
+                </div>
+            </div>
+            <p class="footer-about">Your trusted online grocery store. Fresh products delivered to your doorstep within 60 minutes.</p>
+            <div class="social-links">
+                <a><i class="fab fa-facebook-f"></i></a>
+                <a><i class="fab fa-instagram"></i></a>
+                <a><i class="fab fa-twitter"></i></a>
+                <a><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a onclick="showPage('home')">Home</a>
+            <a onclick="showPage('shop')">Shop</a>
+            <a onclick="showPage('about')">About Us</a>
+            <a onclick="showPage('contact')">Contact</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <a onclick="goToCategory(event, 'Fruits & Vegetables')">Fruits & Vegetables</a>
+            <a onclick="goToCategory(event, 'Dairy & Eggs')">Dairy & Eggs</a>
+            <a onclick="goToCategory(event, 'Meat & Seafood')">Meat & Seafood</a>
+            <a onclick="goToCategory(event, 'Beverages')">Beverages</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact Info</h4>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Main Boulevard, Lahore</p>
+            <p><i class="fas fa-phone"></i> +92 300 1234567</p>
+            <p><i class="fas fa-envelope"></i> support@freshcart.pk</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 FreshCart. All rights reserved. Made with <i class="fas fa-heart"></i> in Pakistan</p>
+    </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" class="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMsg">Item added to cart!</span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
